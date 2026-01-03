@@ -5,7 +5,6 @@ A Spring Boot microservices system demonstrating:
 - Eureka Service Discovery
 - Spring Cloud API Gateway
 - OpenFeign inter-service communication
-- Load-balanced service instances
 
 ## Architecture
 
