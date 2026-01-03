@@ -14,15 +14,6 @@ A Spring Boot microservices system demonstrating:
 - **Question Service** – manages questions
 - **Quiz Service** – creates and evaluates quizzes
 
-## Tech Stack
-
-- Java 21
-- Spring Boot
-- Spring Cloud
-- Netflix Eureka
-- Spring Cloud Gateway
-- OpenFeign
-
 ## Services & Ports
 
 | Service           | Port |
@@ -43,7 +34,95 @@ Access:
 - Eureka: http://localhost:8761
 - Gateway: http://localhost:8083
 
-## Example Requests
+## Example Requests (via API Gateway)
+
+> Base URL: `http://localhost:8083`  
+> All external traffic is routed through **Spring Cloud API Gateway**
+
+### Quiz Service
+
+#### Get quiz questions
+Retrieve all questions for a given quiz.
 
 ```http
-GET http://localhost:8083/quiz-service/quiz/get/1
+GET /quiz-service/quiz/get/{quizId}
+```
+#### Create a new quiz
+Creates a quiz by dynamically fetching questions from the Question Service
+Query parameters : category(question category), numQUestions(number of questions), title(quiz title)
+
+```http
+POST /quiz-service/quiz/create
+```
+
+Example: 
+
+```http
+POST http://localhost:8083/quiz-service/quiz/create?category=Java&numQuestions=3&title=Java
+```
+
+#### Submit quiz answers & calculate score
+Evaluates the quiz using Question Service
+
+```http
+POST /quiz-service/quiz/submit/{quizId}
+```
+
+Example:
+
+```http                                        
+POST http://localhost:8083/quiz-service/quiz/submit/1
+```
+
+### Question Service
+
+#### Get all questions
+Retrieve all questions
+
+```http
+GET /question-service/question/allQuestions
+```
+
+#### Get questions by category
+
+```http
+GET /question-service/question/category/{category}
+```
+
+Example: 
+
+```http
+GET http://localhost:8083/question-service/question/category/Java
+```
+
+#### Add, Delete Questions              
+
+```http
+POST http://localhost:8083/question-service/question/add
+```
+
+```http
+POST http://localhost:8083/question-service/question/delete/5
+```
+
+
+#### Generate randomm questions for a quiz
+Returns question IDs used internally by the Quiz Service.
+
+```http
+GET /question-service/question/generate
+```
+
+Example:
+
+```http
+GET http://localhost:8083/question-service/question/generate?categoryName=Java&numQuestions=3
+```
+
+#### Service discovery
+
+Eureka Dashboard:
+
+```http
+http://localhost:8761
+```
