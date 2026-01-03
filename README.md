@@ -17,12 +17,11 @@ A Spring Boot microservices system demonstrating:
 ## Tech Stack
 
 - Java 21
-- Spring Boot 4.x
-- Spring Cloud 2025.x
+- Spring Boot
+- Spring Cloud
 - Netflix Eureka
 - Spring Cloud Gateway
 - OpenFeign
-- Maven
 
 ## Services & Ports
 
